@@ -1,19 +1,18 @@
 {
-  "name": "homebar",
+  "name": "recipes_api",
   "version": "1.0.0",
-  "description": "recipe and ordering website for home cocktails",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node index.js",
-    "watch": "nodemon index.js"
+    "init": "node init_db.js",
+    "server": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.0",
     "express": "^4.17.1",
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.1"
+    "mongoose": "^5.6.5"
   }
 }
