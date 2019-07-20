@@ -56,14 +56,13 @@ app.route('/supply/:name')
 app.get('/available', (req, res) => {
 	mongoose.connect(mongourl, { useNewUrlParser: true })
 	Ingredient.find({supply: true})
-		.then(result => result.map(obj => obj.name))
+		.then(result => result.map(obj => obj.name.toLowerCase()))
 		.then(ings => {
-			console.log(ings);
 			Drink.find({})
 				.then(result => {
 					return result.filter(d => {
 						for(var i = 0; i < d.ingredients.length; i++){
-							if(!(ings.includes(d.ingredients[i].name))){
+							if(!(ings.includes(d.ingredients[i].name.toLowerCase()))){
 								return false;
 							}
 						}
@@ -71,9 +70,10 @@ app.get('/available', (req, res) => {
 					})
 				}).then(filtered => {
 					res.json(filtered);
-					mongoose.connection.close();
 				})
-		})
+				.then(() => mongoose.connection.close())
+			})
+		// .then(() => {mongoose.connection.close();})
 })
 
 app.get('/ingredients', (req, res) => {
