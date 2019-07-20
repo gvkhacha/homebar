@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
 const {Drink, Ingredient, mongourl} = require('./MongoConn')
 
+app.use(cors())
 
 app.get('/all', (req, res) => {
 	mongoose.connect(mongourl, { useNewUrlParser: true })
@@ -38,7 +40,7 @@ app.route('/supply/:name')
 				return res.send(500, {error: err});
 			}
 			return res.send("Success");
-		})
+		}).then(() => mongoose.connection.close());
 	})
 	.delete((req, res) => {
 		mongoose.connect(mongourl, { useNewUrlParser: true })
@@ -48,7 +50,7 @@ app.route('/supply/:name')
 					return res.send(500, {error: err});
 				}
 				return res.send("Success");
-		})
+		}).then(() => mongoose.connection.close());
 	})
 
 app.get('/available', (req, res) => {
@@ -71,6 +73,15 @@ app.get('/available', (req, res) => {
 					res.json(filtered);
 					mongoose.connection.close();
 				})
+		})
+})
+
+app.get('/ingredients', (req, res) => {
+	mongoose.connect(mongourl, {useNewUrlParser: true})
+	Ingredient.find({})
+		.then(result => {
+			res.json(result)
+			mongoose.connection.close();
 		})
 })
 
