@@ -4,7 +4,7 @@ import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { ComboBox } from 'office-ui-fabric-react/lib/index';
-
+import axios from 'axios';
 
 const Ingredient = ({ name }) => {
     return (
@@ -27,6 +27,17 @@ const Admin = () => {
     const [instructions, setInstructions] = useState('');
     const [ingredients, setIngredients] = useState([]);
     const [allIngr, setAllIngr] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/ingredients')
+            .then(result => {
+                setAllIngr(result.data.map((ingr) => {
+                    ingr.key = ingr._id;
+                    ingr.text = ingr.name;
+                    return ingr;
+                }).sort((a, b) => a.name <= b.name ? -1 : 1))
+            });
+    }, [])
 
     const columnProps = {
         tokens: { childrenGap: 15 },
