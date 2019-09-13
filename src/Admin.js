@@ -4,11 +4,15 @@ import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { ComboBox } from 'office-ui-fabric-react/lib/index';
+import { FontIcon } from 'office-ui-fabric-react/lib/Icon';
 import axios from 'axios';
 
-const Ingredient = ({ name }) => {
+const Ingredient = ({ name, removeIngr }) => {
     return (
-        <Label>{name}</Label>
+        <div>
+            <Label style={{display: 'inline-block'}}>{name}</Label>
+            <FontIcon iconName="Cancel" style={{marginLeft: '25px'}} onClick={removeIngr}/>
+        </div>
     )
 }
 
@@ -82,7 +86,7 @@ const Admin = () => {
                     />
                     {ingredients.sort((a, b) => a.name <= b.name ? -1 : 1)
                         .map(ing => 
-                            <Ingredient key={ing.key} name={ing.text} />)}
+                            <Ingredient key={ing.key} name={ing.text} removeIngr={() => setIngredients(ingredients.filter((i) => i.key !== ing.key))} />)}
                 </Stack>
             </form>
         </div>
