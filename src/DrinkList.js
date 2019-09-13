@@ -1,19 +1,43 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import crypto from 'crypto';
 
-// const Drink = ({name,}) => {
-//   return (
-//     <div className='drink'>
-//       <h6>{props.name}</h6>
-//       <img src='{props.imageUrl}' alt='{props.name} image' />
-//     </div>
-//     )
-// }
-const Drink = (props) => {
+const Ingredient = ({name, measure}) => {
+  return (
+    <li>{name}: {measure}</li>
+    )
+}
+
+const Drink = ({drink}) => {
+  const [details, setDetails] = useState(false);
+
+  const handleToggle = () => {
+    setDetails(!details);
+  }
+
+  const createKey = (input) => {
+    return crypto.createHash('sha1').update(input).digest('base64');
+  }
+
   return (
     <div>
-      <h6>{props.name}</h6>
-      <img src={props.imageUrl} alt='' width='200px' height='auto' />
+      <h6>{drink.name}</h6>
+      <img src={drink.imageUrl} alt='' width='200px' height='auto' />
+      <label>
+        <input type='checkbox' onChange={() => handleToggle()} />
+        Show Details
+      </label>
+      <div style={{display: details ? 'block' : 'none'}} >
+        <p>Glass: {drink.glass}</p>
+        <h6>Ingredients</h6>
+        <ul>
+          {drink.ingredients.map(ing => <Ingredient key={ing._id} name={ing.name} measure={ing.measure} />)}
+        </ul>
+        <h6>Instructions</h6>
+        <ol>
+          {drink.instructions.map(ins => <li key={createKey(ins)}>{ins}</li>)}
+        </ol>
+      </div>
     </div>
     )
 }
@@ -68,7 +92,7 @@ const DrinkList = () => {
           return true;
         }
         return drink.ingredients.find(ing => ing.name.toLowerCase().includes(liqFilter))
-      }).map(d => <Drink key={d.name} name={d.name} imageUrl={d.imageUrl}/>)}
+      }).map(d => <Drink key={d.name} drink={d} name={d.name} imageUrl={d.imageUrl} ingredients={d.ingredients} />)}
     </div>
     )
 }
