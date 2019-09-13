@@ -2,9 +2,13 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+var bodyParser = require('body-parser');
 const {Drink, Ingredient, mongourl} = require('./MongoConn')
 
+
 app.use(cors())
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.get('/all', (req, res) => {
 	mongoose.connect(mongourl, { useNewUrlParser: true })
@@ -82,6 +86,28 @@ app.get('/ingredients', (req, res) => {
 		.then(result => {
 			res.json(result)
 			mongoose.connection.close();
+		})
+})
+
+app.post('/recipe', (req, res) => {
+	mongoose.connect(mongourl, { useNewUrlParser: true })
+	console.log(req.body);
+	Drink.find({ name: res.body.name })
+		.then(result => {
+			if (result.length) {
+				console.log(res.body.name, "already exists");
+			} else {
+				var d = new Drink({
+					tags: [],
+					oldId: 0,
+					instructions: res.body.instructions,
+					name: res.body.name,
+					glass: res.body.glass,
+					imageUrl: res.body.imageUrl,
+					ingredients: res.body.ingredients
+				});
+				d.save().then(() => console.log(res.body.name, "saved"))
+			}
 		})
 })
 

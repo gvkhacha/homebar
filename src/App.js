@@ -1,5 +1,4 @@
 import React from 'react';
-import IngredientsList from './IngredientsList';
 import Admin from './Admin';
 import DrinkList from './DrinkList';
 import { Switch, Route } from 'react-router-dom'
