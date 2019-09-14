@@ -106,9 +106,11 @@ app.post('/ingredients/:name', (req, res) => {
 				});
 				i.save().then(() => {
 					console.log(name, "saved");
+					mongoose.connection.close()
 					res.status(200);
 					res.send(name);
 				})
+
 			}
 		})
 })
@@ -118,6 +120,7 @@ app.delete('/ingredients/:id', (req, res) => {
 	mongoose.connect(mongourl, { useNewUrlParser: true })
 	Ingredient.find({_id: id})
 		.deleteOne().exec().then(() => {
+			mongoose.connection.close()
 			res.status(200);
 			res.send('Successfully deleted');
 		})
@@ -125,24 +128,26 @@ app.delete('/ingredients/:id', (req, res) => {
 
 app.post('/recipe', (req, res) => {
 	mongoose.connect(mongourl, { useNewUrlParser: true })
-	Drink.find({ name: res.body.name })
+	Drink.find({ name: req.body.name })
 		.then(result => {
 			if (result.length) {
-				console.log(res.body.name, "already exists");
+				console.log(req.body.name, "already exists");
+				mongoose.connection.close()
 				res.status(409);
 				res.send();
 			} else {
 				var d = new Drink({
 					tags: [],
 					oldId: 0,
-					instructions: res.body.instructions,
-					name: res.body.name,
-					glass: res.body.glass,
-					imageUrl: res.body.imageUrl,
-					ingredients: res.body.ingredients
+					instructions: req.body.instructions,
+					name: req.body.name,
+					glass: req.body.glass,
+					imageUrl: req.body.imageUrl,
+					ingredients: req.body.ingredients
 				});
 				d.save().then(() => {
-					console.log(res.body.name, "saved");
+					console.log(req.body.name, "saved");
+					mongoose.connection.close()
 					res.status(200);
 					res.send();
 				})

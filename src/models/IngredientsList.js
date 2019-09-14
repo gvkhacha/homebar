@@ -2,12 +2,13 @@ import React from 'react';
 import { Stack } from 'office-ui-fabric-react';
 import Ingredient from './Ingredient';
 
-const IngredientList = ({ ingrList, isAdmin, removeIngr }) => {
+const IngredientList = ({ ingrList, isAdmin, removeIngr, isAmount }) => {
+
 
     return (
         <Stack>
             {ingrList.map(ing =>
-                <Ingredient key={ing.key} name={ing.text} removeIngr={() => removeIngr(ing)} isAdmin={isAdmin} />)
+                <Ingredient key={ing.key} ing={ing} removeIngr={() => removeIngr(ing)} isAdmin={isAdmin} isAmount={isAmount} />)
             }
         </Stack>
     )

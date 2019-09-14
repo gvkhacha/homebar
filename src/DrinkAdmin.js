@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DefaultButton, TextField, Stack, Dropdown, Label, ComboBox } from 'office-ui-fabric-react';
 import axios from 'axios';
 
-import IngredientsList from './models/IngredientsList';
+import Ingredient from './models/Ingredient';
 
 const glassOptions = [
     { key: 'rocks', text: 'Rocks Glass' },
@@ -56,12 +56,32 @@ const DrinkAdmin = () => {
         var recipe = {
             name: name,
             imageUrl: url,
-            ingredients: ingredients,
+            ingredients: ingredients.map(ing => {
+                return {ingredient: ing,
+                amount: ingrAmount[ing.key]}
+            }),
             instructions: instructions.split('\n').filter(i => i !== ''),
             glass: glassware
         }
-        console.log(recipe);
+        axios.post('http://localhost:3001/recipe', recipe)
+            .then(() => {
+                setName('');
+                setUrl('');
+                setIngredients([]);
+                setInstructions('');
+                setGlassware('');
+            }).catch(() => {
+                console.log("ERROR");
+                console.log(recipe);
+            })
     }
+
+    let ingrAmount = {};
+
+    const amountChange = (id, val) => {
+        ingrAmount[id] = val;
+    }
+
 
     return (
         <Stack {...columnProps}>
@@ -83,7 +103,13 @@ const DrinkAdmin = () => {
                 options={allIngr}
                 onChange={onIngrChange}
             />
-            <IngredientsList isAdmin={true} ingrList={ingredients} removeIngr={removeIngr} />
+            {ingredients.map(ing => 
+                <Stack horizontal key={"stack" + ing.key}>
+                    <TextField key={"amt" + ing.key} onChange={(e) => amountChange(ing.key, e.target.value)} 
+                        styles={{ root: { width: '100px' } }}/>
+                    <Ingredient key={ing.key} ing={ing} removeIngr={() => removeIngr(ing)} isAdmin={true} />)
+                </Stack>
+            )}
             <DefaultButton text="Add Recipe" onClick={submitDrink} />
         </Stack>
     )

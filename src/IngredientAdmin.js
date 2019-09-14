@@ -41,6 +41,12 @@ const IngredientAdmin = () => {
         }
     }
 
+    const keyDown = (e)  => {
+        if (e.keyCode === 13) {
+            submitIngr();
+        }
+    }
+    
     const columnProps = {
         tokens: { childrenGap: 15 },
         styles: { root: { width: 300 } }
@@ -49,7 +55,7 @@ const IngredientAdmin = () => {
 
     return (
         <Stack {...columnProps}>
-            <TextField label="Drink Name" value={name} onChange={(e, v) => setName(v)} />
+            <TextField label="Drink Name" value={name} onChange={(e, v) => setName(v)} onKeyDown={keyDown} />
             <DefaultButton text="Add Ingredient" onClick={submitIngr} />
             <IngredientsList isAdmin={true} ingrList={allIngr} removeIngr={removeIngr} />
         </Stack>
