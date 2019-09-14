@@ -20,12 +20,12 @@ const DrinkAdmin = () => {
     const [ingredients, setIngredients] = useState([]);
     const [allIngr, setAllIngr] = useState([]);
     const [glassware, setGlassware] = useState('rocks');
-    const [text, setText] = useState('');
 
     useEffect(() => {
         axios.get('http://localhost:3001/ingredients')
             .then(result => {
-                setAllIngr(result.data.map((ingr) => {
+                setAllIngr(result.data.filter(i => i.name)
+                    .map((ingr) => {
                     ingr.key = ingr._id;
                     ingr.text = ingr.name;
                     return ingr;
@@ -42,12 +42,8 @@ const DrinkAdmin = () => {
         setIngredients(ingredients.filter(i => i.key !== ing.key));
     }
 
-    const onIngrChange = (ev, op, index, value) => {
-        if (value !== undefined) {
-            const newIng = { key: value, text: value };
-            setAllIngr(allIngr.concat([newIng]));
-            setText(value);
-        } else if (op !== undefined) {
+    const onIngrChange = (ev, op) => {
+        if (op !== undefined) {
             if (op.selected) {
                 setIngredients(ingredients.concat([op]));
             } else {
@@ -82,11 +78,10 @@ const DrinkAdmin = () => {
             <ComboBox
                 multiSelect
                 label="Add Ingredient"
-                allowFreeform={true}
+                allowFreeform={false}
                 autoComplete={'on'}
                 options={allIngr}
                 onChange={onIngrChange}
-                text={text}
             />
             <IngredientsList isAdmin={true} ingrList={ingredients} removeIngr={removeIngr} />
             <DefaultButton text="Add Recipe" onClick={submitDrink} />
