@@ -89,13 +89,48 @@ app.get('/ingredients', (req, res) => {
 		})
 })
 
+app.post('/ingredients/:name', (req, res) => {
+	const name = req.params.name;
+	mongoose.connect(mongourl, { useNewUrlParser: true })
+	Ingredient.find({ name: name })
+		.then(result => {
+			if (result.length) {
+				console.log(name, "already exists");
+				res.status(409);
+				res.send('Already exists');
+			} else {
+				var i = new Ingredient({
+					supply: false,
+					name: name,
+					urlName: encodeURIComponent(name)
+				});
+				i.save().then(() => {
+					console.log(name, "saved");
+					res.status(200);
+					res.send(name);
+				})
+			}
+		})
+})
+
+app.delete('/ingredients/:id', (req, res) => {
+	const id = req.params.id;
+	mongoose.connect(mongourl, { useNewUrlParser: true })
+	Ingredient.find({_id: id})
+		.deleteOne().exec().then(() => {
+			res.status(200);
+			res.send('Successfully deleted');
+		})
+})
+
 app.post('/recipe', (req, res) => {
 	mongoose.connect(mongourl, { useNewUrlParser: true })
-	console.log(req.body);
 	Drink.find({ name: res.body.name })
 		.then(result => {
 			if (result.length) {
 				console.log(res.body.name, "already exists");
+				res.status(409);
+				res.send();
 			} else {
 				var d = new Drink({
 					tags: [],
@@ -106,7 +141,11 @@ app.post('/recipe', (req, res) => {
 					imageUrl: res.body.imageUrl,
 					ingredients: res.body.ingredients
 				});
-				d.save().then(() => console.log(res.body.name, "saved"))
+				d.save().then(() => {
+					console.log(res.body.name, "saved");
+					res.status(200);
+					res.send();
+				})
 			}
 		})
 })

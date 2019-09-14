@@ -89,7 +89,7 @@ const DrinkAdmin = () => {
                 text={text}
             />
             <IngredientsList isAdmin={true} ingrList={ingredients} removeIngr={removeIngr} />
-            <DefaultButton text="Add Drink Recipe" onClick={submitDrink} />
+            <DefaultButton text="Add Recipe" onClick={submitDrink} />
         </Stack>
     )
 }
