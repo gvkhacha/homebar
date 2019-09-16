@@ -66,7 +66,7 @@ app.get('/available', (req, res) => {
 				.then(result => {
 					return result.filter(d => {
 						for(var i = 0; i < d.ingredients.length; i++){
-							if(!(ings.includes(d.ingredients[i].name.toLowerCase()))){
+							if(!(ings.includes(d.ingredients[i].ingredient.name.toLowerCase()))){
 								return false;
 							}
 						}
