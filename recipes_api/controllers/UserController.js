@@ -21,7 +21,6 @@ router.post('/', (req, res) => {
         if(err){
             return res.status(500).send("Error saving user");
         }
-        delete user.password;
         res.status(200).send(user);
     })
 });
