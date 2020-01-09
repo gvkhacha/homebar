@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -6,11 +8,14 @@ const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+
 const UserController = require('./controllers/UserController');
+
+
 require('./config/passport');
 
 app.use(session({
-    secret: "changed",
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: true,
     store: new MongoStore({

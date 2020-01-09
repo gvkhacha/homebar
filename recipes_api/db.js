@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const config = require('./config/databse');
 
-
-const url = `mongodb+srv://${config.username}:${config.password}@clusterp-t0dvb.mongodb.net/${config.dbName}?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@clusterp-t0dvb.mongodb.net/${process.env.MONGODB_NAME}?retryWrites=true&w=majority`;
 const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true
