@@ -7,13 +7,15 @@ const db = require('./db');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-
+const cors = require('cors');
 
 const UserController = require('./controllers/UserController');
 
 
 require('./config/passport');
-
+app.use(cors({
+    credentials: true
+}));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,

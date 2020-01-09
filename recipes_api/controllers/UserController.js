@@ -17,7 +17,7 @@ function authenticationMiddleware(){
         if(req.isAuthenticated()){
             return next();
         }
-        res.redirect('/');
+        res.status(401).send();
     }
 }
 
@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
     })
 });
 
-router.get('/', authenticationMiddleware(), (req, res) => {
+router.get('/', (req, res) => {
     User.find({}, (err, data)=>{
         if(err){
             return res.status(500).send("Error in retrieving User from database");
@@ -57,5 +57,11 @@ router.get('/secure', authenticationMiddleware(), (req, res) => {
     console.log(req.isAuthenticated());
     res.status(200).send("hello");
 });
+
+router.get('/logout', authenticationMiddleware(), (req, res) => {
+    req.session.destroy(function(err){
+        res.redirect('/users');
+    })
+})
 
 module.exports = router;
