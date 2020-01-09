@@ -10,9 +10,19 @@ passport.use(new LocalStrategy({
 }, (email, password, done) => {
     User.findOne({email}).then((user) => {
         if(!user || !user.validatePassword(password)){
-            return done(null, false, {errors: {'email or password': 'invalid'}});
+            return done(null, false, {errors: 'Incorrect username or password'});
         }
 
         return done(null, user);
     }).catch(done);
 }));
+
+passport.serializeUser((user, done) => {
+    done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+        done(err, user);
+    })
+})

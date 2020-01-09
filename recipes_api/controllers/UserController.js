@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 const User = require('../models/User');
 const auth = require('./auth');
@@ -12,7 +13,19 @@ router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
 
+function authenticationMiddleware(){
+    return function(req, res, next){
+        if(req.isAuthenticated()){
+            return next();
+        }
+        res.redirect('/');
+    }
+}
+
+
 router.post('/', auth.optional, (req, res) => {
+    console.log(req.body)
+
     const u = {
         name: req.body.name,
         email: req.body.email,
@@ -36,5 +49,16 @@ router.get('/', auth.required, (req, res) => {
     })
 });
 
+
+router.post('/login', passport.authenticate('local'), (req, res) => {
+    console.log("log in sent");
+    res.status(200).send(req.user);
+});
+
+router.get('/secure', authenticationMiddleware(), (req, res) => {
+    console.log("secure page accessed");
+    console.log(req.isAuthenticated());
+    res.status(200).send("hello");
+});
 
 module.exports = router;

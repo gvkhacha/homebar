@@ -7,14 +7,7 @@ const EXP = 1; // should be later set to ~60
 const UserSchema = new mongoose.Schema({
     name: String,
     email: String,
-    password: {
-        type: String,
-        select: false
-    },
-    salt: {
-        type: String,
-        select: false
-    }
+    password: String
 })
 
 UserSchema.methods.validatePassword = function(password){

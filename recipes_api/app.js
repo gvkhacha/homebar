@@ -1,9 +1,27 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 const db = require('./db');
+const passport = require('passport');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const UserController = require('./controllers/UserController');
 require('./config/passport');
+
+app.use(session({
+    secret: "secrettext",
+    saveUninitialized: true,
+    resave: true,
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection,
+        collection: "session"
+    })
+}))
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/users', UserController);
 
