@@ -10,7 +10,7 @@ const UserController = require('./controllers/UserController');
 require('./config/passport');
 
 app.use(session({
-    secret: "secrettext",
+    secret: "changed",
     saveUninitialized: true,
     resave: true,
     store: new MongoStore({

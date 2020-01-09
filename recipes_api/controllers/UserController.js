@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 const User = require('../models/User');
-const auth = require('./auth');
 
 
 const router = express.Router();
@@ -23,9 +22,7 @@ function authenticationMiddleware(){
 }
 
 
-router.post('/', auth.optional, (req, res) => {
-    console.log(req.body)
-
+router.post('/', (req, res) => {
     const u = {
         name: req.body.name,
         email: req.body.email,
@@ -40,7 +37,7 @@ router.post('/', auth.optional, (req, res) => {
     })
 });
 
-router.get('/', auth.required, (req, res) => {
+router.get('/', authenticationMiddleware(), (req, res) => {
     User.find({}, (err, data)=>{
         if(err){
             return res.status(500).send("Error in retrieving User from database");
