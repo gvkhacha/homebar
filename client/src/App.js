@@ -2,10 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-
-axios.defaults.withCredentials = true;
+import {useState} from 'react';
 
 function App() {
+  const [token, setToken] = useState('');
+
   const login = () => {
     const u = {
       name: "Test",
@@ -16,10 +17,12 @@ function App() {
     axios.post("http://10.0.1.25:3001/users/login", {user: u})
       .then(data => {
         console.log(data);
+        const jwt = data.data.token;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+        setToken(`Bearer ${jwt}`);
       })
   }
   const testApi = () => {
-    console.log("testing");
     axios.get("http://10.0.1.25:3001/users/secure")
       .then(data => {
         console.log(data);
