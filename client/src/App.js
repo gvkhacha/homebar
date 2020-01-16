@@ -2,10 +2,16 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import {useState} from 'react';
+
+
+import {useSelector, useDispatch} from 'react-redux';
+import {loginUser} from './actions/userActions';
+
+
 
 function App() {
-  const [token, setToken] = useState('');
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const login = () => {
     const u = {
@@ -13,16 +19,12 @@ function App() {
       email: "test@gmail.com",
       password: "123abc"
     }
-
-    axios.post("http://10.0.1.25:3001/users/login", {user: u})
-      .then(data => {
-        console.log(data);
-        const jwt = data.data.token;
-        axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-        setToken(`Bearer ${jwt}`);
-      })
+    dispatch(loginUser(u));
   }
+
+
   const testApi = () => {
+    console.log(user);
     axios.get("http://10.0.1.25:3001/users/secure")
       .then(data => {
         console.log(data);
