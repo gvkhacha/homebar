@@ -48,13 +48,10 @@ router.get('/', (req, res) => {
 
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
-    console.log("log in sent");
     res.status(200).send(req.user.authJson());
 });
 
 router.get('/secure', passport.authenticate('jwt', {session: false}), (req, res) => {
-    console.log("secure page accessed");
-    console.log(req.isAuthenticated());
     res.status(200).send("hello");
 });
 

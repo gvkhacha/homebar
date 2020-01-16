@@ -1,7 +1,9 @@
 import {LOGIN_SUCCESS} from '../types';
 
 const initialState = {
-    user: null,
+    email: '',
+    id: '',
+    loggedIn: false
 };
 
 export default function(state=initialState, action){
@@ -9,7 +11,9 @@ export default function(state=initialState, action){
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                user: action.payload
+                email: action.payload.email,
+                id: action.payload.id,
+                loggedIn: true
             };
         default:
             return state;
