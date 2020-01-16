@@ -46,14 +46,23 @@ router.get('/', (req, res) => {
     })
 });
 
-
+router.get('/login', authenticationMiddleware(), (req, res) => {
+    res.status(200).send(req.user.authJson());
+})
 router.post('/login', passport.authenticate('local'), (req, res) => {
+    console.log(req.session);
     res.status(200).send(req.user.authJson());
 });
 
 router.get('/secure', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.status(200).send("hello");
 });
+
+router.get('/test', authenticationMiddleware(), (req, res) => {
+    console.log(req.user);
+    console.log(req.isAuthenticated());
+    res.status(200).send();
+})
 
 router.get('/logout', authenticationMiddleware(), (req, res) => {
     req.session.destroy(function(err){

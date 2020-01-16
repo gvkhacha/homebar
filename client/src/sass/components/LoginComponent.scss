@@ -1,0 +1,19 @@
+.loginComponent{
+    margin-top: 30%;
+
+    .header{
+        text-align: center;
+
+        .MuiAvatar-root{
+            margin: auto;
+            color: $primary_color;
+            background-color: $accent_color;
+        }
+    }
+
+    // To override MUI specific areas
+    // .MuiButton-containedPrimary{
+    //     background-color: $primary_color;
+    // }
+    
+}

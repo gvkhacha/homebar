@@ -11,6 +11,7 @@ import {AuthRoute} from './util/AuthRoute';
 import LoginComponent from './components/LoginComponent';
 import Home from './components/Home'
 
+import './sass/style.scss'
 
 function App() {
   return (

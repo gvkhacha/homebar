@@ -8,6 +8,7 @@ const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const UserController = require('./controllers/UserController');
 
@@ -16,14 +17,21 @@ require('./config/passport');
 app.use(cors({
     credentials: true
 }));
+app.use(cookieParser());
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
-    resave: true,
+    resave: false,
     store: new MongoStore({
         mongooseConnection: mongoose.connection,
         collection: "session"
-    })
+    }),
+    cookie: {
+        maxAge: 8 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production'
+    }
 }))
 
 
