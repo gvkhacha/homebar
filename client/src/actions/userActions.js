@@ -3,7 +3,7 @@ import axios from 'axios';
 import {LOGIN_SUCCESS} from '../types';
 
 export const loginUser = user => dispatch => {
-    axios.post("http://10.0.1.25:3001/users/login", {user: user})
+    return axios.post("http://10.0.1.25:3001/users/login", {user: user})
         .then(res => res.data)
         .then(data => {
             const user = {id: data._id, email: data.email};
