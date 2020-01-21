@@ -4,7 +4,6 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
 import {loginUser} from '../actions/userActions';
-import axios from 'axios';
 import {
     Container,
     Checkbox,
@@ -16,7 +15,10 @@ import {
     Link,
     Grid,
     Typography,
+    Modal
 } from '@material-ui/core';
+
+import {Spinner} from '../util/Spinner';
 
 //eslint-disable-next-line
 const EMAIL_RE = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -25,6 +27,7 @@ const LoginComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -51,12 +54,9 @@ const LoginComponent = () => {
         return EMAIL_RE.test(email);
     }
 
-    const test = () => {
-        axios.get('/users/test').then(res => console.log(res));
-    }
-
 
     return (
+        <>
         <Container component="main" maxWidth="xs" className="loginComponent">
             <CssBaseline />
             <div className="header">
@@ -109,7 +109,7 @@ const LoginComponent = () => {
                 </Button>
                 <Grid container>
                     <Grid item xs>
-                    <Link href="#" variant="body2" onClick={test}>
+                    <Link href="#" variant="body2" onClick={() => setOpen(true)}>
                         Forgot password?
                     </Link>
                     </Grid>
@@ -121,6 +121,13 @@ const LoginComponent = () => {
                 </Grid>
             </form>
         </Container>
+        <Modal open={open} onClose={() => setOpen(false)}>
+            <div>
+                <h1> Hello world</h1>
+                <h6>{email}</h6>
+            </div>
+        </Modal>
+        </>
       )
 }
 

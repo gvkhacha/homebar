@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+import {pendingTask, begin, end} from 'react-redux-spinner';
 import {LOGIN_SUCCESS, LOGOUT} from '../types';
 
 export const loginUser = user => dispatch => {
+    dispatch({type: '', [pendingTask]: begin});
     return axios.post("/users/login", {user: user})
         .then(res => res.data)
         .then(data => {
@@ -11,9 +13,9 @@ export const loginUser = user => dispatch => {
             const jwt = data.token;
             axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
             localStorage.setItem("hb_jwt", jwt);
-            dispatch({type:LOGIN_SUCCESS, payload: user})
+            dispatch({type:LOGIN_SUCCESS, payload: user, [pendingTask]: end})
         })
-        .catch(err => err)
+        .catch(err => err);
     }
 
 export const restoreSession = () => dispatch => {
