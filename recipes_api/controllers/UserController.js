@@ -46,9 +46,11 @@ router.get('/', (req, res) => {
     })
 });
 
+//if we use authJson() it will refresh token. Not sure if we want that.
 router.get('/login', authenticationMiddleware(), (req, res) => {
-    res.status(200).send(req.user.authJson());
-})
+    res.status(200).send(req.user.json());
+});
+
 router.post('/login', passport.authenticate('local'), (req, res) => {
     console.log(req.session);
     res.status(200).send(req.user.authJson());
@@ -66,7 +68,7 @@ router.get('/test', authenticationMiddleware(), (req, res) => {
 
 router.get('/logout', authenticationMiddleware(), (req, res) => {
     req.session.destroy(function(err){
-        res.redirect('/users');
+        res.status(200).send();
     })
 })
 

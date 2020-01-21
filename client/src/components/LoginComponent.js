@@ -1,9 +1,9 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
-import {loginUser, loginFromSession} from '../actions/userActions';
+import {loginUser} from '../actions/userActions';
 import axios from 'axios';
 import {
     Container,
@@ -29,13 +29,6 @@ const LoginComponent = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(loginFromSession())
-            .then(() => {
-                history.push('/');
-            })
-    })
-  
     const login = (e) => {
         e.preventDefault();
         if(validateEmail()){
@@ -55,7 +48,6 @@ const LoginComponent = () => {
     }
 
     const validateEmail = () => {
-        return true;
         return EMAIL_RE.test(email);
     }
 

@@ -26,6 +26,13 @@ UserSchema.methods.validatePassword = function(password){
     return bcrypt.compareSync(password, this.password);
 }
 
+UserSchema.methods.json = function(){
+    return {
+        _id: this._id,
+        email: this.email,
+    };
+}
+
 UserSchema.methods.authJson = function() {
     return {
         _id: this._id,
