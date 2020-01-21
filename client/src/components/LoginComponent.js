@@ -15,10 +15,12 @@ import {
     Link,
     Grid,
     Typography,
-    Modal
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions
 } from '@material-ui/core';
 
-import {Spinner} from '../util/Spinner';
 
 //eslint-disable-next-line
 const EMAIL_RE = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -54,6 +56,9 @@ const LoginComponent = () => {
         return EMAIL_RE.test(email);
     }
 
+    const resetPass = () => {
+        console.log("TODO: Reset password request");
+    }
 
     return (
         <>
@@ -121,12 +126,35 @@ const LoginComponent = () => {
                 </Grid>
             </form>
         </Container>
-        <Modal open={open} onClose={() => setOpen(false)}>
-            <div>
-                <h1> Hello world</h1>
-                <h6>{email}</h6>
-            </div>
-        </Modal>
+        <Dialog
+            onClose={() => setOpen(false)} open={open}
+            aria-labelledby="forgot-password-dialog"
+        >
+            <DialogTitle onClose={() => setOpen(false)}>Reset Password</DialogTitle>
+            <DialogContent dividers>
+                <Typography gutterBottom>
+                    Please enter the email address associated with your account. We will send you an email with instructions on how to reset your password.
+                </Typography>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    helperText={"A form will be sent to your email"}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={() => setOpen(false)}>Cancel</Button>
+                <Button autoFocus onClick={resetPass} color='primary'>Submit</Button>
+            </DialogActions>
+        </Dialog>
         </>
       )
 }
