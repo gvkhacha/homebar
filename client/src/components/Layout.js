@@ -31,6 +31,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import Person from '@material-ui/icons/Person';
 import Settings from '@material-ui/icons/Settings';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import {
+  Home,
+  LocalBar
+} from '@material-ui/icons';
 
 const drawerWidth = 240;
 
@@ -111,14 +115,14 @@ const SidebarList = () => {
     //first section of items, likely main navigation
     [
       {
-        text: 'Inbox', 
+        text: 'Dashboard', 
         click: () => redirect(''), 
-        iconElement: <InboxIcon />
+        iconElement: <Home />
       },
       {
-        text: 'Mail', 
-        click: () => redirect(''), 
-        iconElement: <MailIcon />
+        text: 'Drinks', 
+        click: () => redirect('/drinks'), 
+        iconElement: <LocalBar />
       }
     ],
     [

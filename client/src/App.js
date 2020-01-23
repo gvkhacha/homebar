@@ -12,6 +12,7 @@ import {Spinner} from './util/Spinner';
 import LoginComponent from './components/LoginComponent';
 import Home from './components/Home';
 import Admin from './components/Admin';
+import DrinksPage from './components/DrinksPage';
 
 
 import './sass/style.scss'
@@ -22,8 +23,9 @@ function App() {
     <Spinner />
     <BrowserRouter>
       <Switch>
-        <Route path='/login'><LoginComponent /></Route>
         <AuthRoute path='/admin' component={Admin}></AuthRoute>
+        <Route path='/login'><LoginComponent /></Route>
+        <Route path='/drinks'><DrinksPage /></Route>
         <Route path='/'><Home /></Route>
       </Switch>
     </BrowserRouter>
