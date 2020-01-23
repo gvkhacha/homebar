@@ -3,6 +3,7 @@ import {LOGIN_SUCCESS, LOGOUT} from '../types';
 const initialState = {
     email: '',
     id: '',
+    name: '',
     loggedIn: false
 };
 

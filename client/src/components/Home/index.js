@@ -1,28 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 
-import {useDispatch} from 'react-redux';
-
-import {logoutUser} from '../../actions/userActions';
-
+import Layout from '../Layout';
 
 const Home = () => {
-  const dispatch = useDispatch();
-
-  const test = () => {
-    axios.get('/users/test').then(res => console.log(res));
-  }
-
-  const logout = () => {
-    dispatch(logoutUser())
-  }
-
     return (
-        <div>Home Component
-          <button onClick={test}>Test</button>
-          <button onClick={logout}>Log Out</button>
-        </div>
-      )
+        <Layout><h1>Test</h1></Layout>
+    )
 }
 
 export default Home;
