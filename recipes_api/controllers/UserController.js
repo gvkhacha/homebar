@@ -56,10 +56,6 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
     res.status(200).send(req.user.authJson());
 });
 
-router.get('/secure', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.status(200).send("hello");
-});
-
 router.get('/test', authenticationMiddleware(), (req, res) => {
     console.log(req.user);
     console.log(req.isAuthenticated());

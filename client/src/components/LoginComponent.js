@@ -21,7 +21,7 @@ import {
     DialogActions
 } from '@material-ui/core';
 
-
+import axios from 'axios';
 //eslint-disable-next-line
 const EMAIL_RE = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -58,6 +58,10 @@ const LoginComponent = () => {
 
     const resetPass = () => {
         console.log("TODO: Reset password request");
+    }
+
+    const test = () => {
+        axios.get('/users/test').then(resp => console.log(resp));
     }
 
     return (
@@ -119,7 +123,7 @@ const LoginComponent = () => {
                     </Link>
                     </Grid>
                     <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2" onClick={test}>
                         {"Don't have an account? Sign Up"}
                     </Link>
                     </Grid>

@@ -11,7 +11,7 @@ export const Spinner = () => {
 
     if(tasks > 0){
         return (
-            <div class="loading"></div>
+            <div className="loading"></div>
         )
     }else{
         return (

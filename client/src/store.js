@@ -1,9 +1,9 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+import {loadUserState} from './util/restore';
 
-const initialState = {};
-
+const initialState = {user: loadUserState()};
 const middleware = [thunk];
 
 const store = createStore(
