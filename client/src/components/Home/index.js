@@ -1,10 +1,13 @@
 import React from 'react';
 
 import Layout from '../Layout';
+import Dashboard from './Dashboard';
 
 const Home = () => {
     return (
-        <Layout><h1>Test</h1></Layout>
+        <Layout>
+            <Dashboard />
+        </Layout>
     )
 }
 

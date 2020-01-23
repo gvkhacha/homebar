@@ -10,7 +10,8 @@ import {AuthRoute} from './util/AuthRoute';
 import {Spinner} from './util/Spinner';
 
 import LoginComponent from './components/LoginComponent';
-import Home from './components/Home'
+import Home from './components/Home';
+import Admin from './components/Admin';
 
 
 import './sass/style.scss'
@@ -22,7 +23,8 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path='/login'><LoginComponent /></Route>
-        <AuthRoute path='/' component={Home}></AuthRoute>
+        <AuthRoute path='/admin' component={Admin}></AuthRoute>
+        <Route path='/'><Home /></Route>
       </Switch>
     </BrowserRouter>
     </>

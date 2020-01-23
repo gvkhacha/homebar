@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 
 import {loginUser} from '../actions/userActions';
@@ -32,7 +32,10 @@ const LoginComponent = () => {
     const [open, setOpen] = useState(false);
 
     const history = useHistory();
+    const location = useLocation();
     const dispatch = useDispatch();
+
+    const href = location.state ? location.state.ref.pathname : "";
 
     const login = (e) => {
         e.preventDefault();
@@ -46,7 +49,7 @@ const LoginComponent = () => {
                 if(err){
                     setError(true);
                 }else{
-                    history.push('/');
+                    history.push(href);
                 }
             })
         }

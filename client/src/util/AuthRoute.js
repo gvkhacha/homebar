@@ -7,7 +7,6 @@ import {
 import {useSelector} from 'react-redux';
 
 export const AuthRoute = ({component: Component, ...rest}) => {
-
     const user = useSelector(state => state.user);
 
     if(user.loggedIn){
@@ -16,7 +15,10 @@ export const AuthRoute = ({component: Component, ...rest}) => {
         )
     }else{
         return (
-            <Redirect to='/login' />
+            <Redirect to={{
+                pathname: '/login',
+                state: {ref: rest.location}
+            }} />
         )
     }
 }

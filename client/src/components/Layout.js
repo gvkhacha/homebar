@@ -117,7 +117,7 @@ const SidebarList = () => {
       },
       {
         text: 'Mail', 
-        click: () => redirect('login'), 
+        click: () => redirect(''), 
         iconElement: <MailIcon />
       }
     ],
@@ -129,7 +129,7 @@ const SidebarList = () => {
       },
       {
         text: 'Spam', 
-        click: () => redirect('login'), 
+        click: () => redirect(''), 
         iconElement: <MailIcon />
       },
       {
@@ -140,8 +140,8 @@ const SidebarList = () => {
     ],
     [
       {
-        text: 'Profile',
-        click: () => redirect(''),
+        text: 'Admin',
+        click: () => redirect('/admin'),
         iconElement: <Person />
       },
       {
@@ -158,7 +158,7 @@ const SidebarList = () => {
   ]
 
   return items.map((list, index) => (
-    <>
+    <div key={`toolbar_list_${index}`}>
       <List>
         {list.map((obj) => (
           <ListItem button key={obj.text} onClick={obj.click}>
@@ -168,7 +168,7 @@ const SidebarList = () => {
         ))}
       </List>
       {index === items.length - 1 ? <></> : <Divider /> }
-    </>
+    </div>
   ))
 }
 
