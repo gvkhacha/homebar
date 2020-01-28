@@ -9,8 +9,8 @@ const ALC = ["Vodka", "Rum", "Gin", "Cognac", "Brandy", "Tequila", "Whiskey", "C
 class Drink {
     constructor(name, imgSrc, ingr, steps, glass){
         this.name = toTitleCase(name);
-        this.imgSrc = imgSrc;
-        this.ingr = ingr.map(i => {
+        this.img = imgSrc;
+        this.ingredients = ingr.map(i => {
             if(i.text){
                 return {name: toTitleCase(i.text), quantity: i.qty};
             }
@@ -18,8 +18,8 @@ class Drink {
         }); 
 
         this.steps = steps; //[str]
-        this.alc = this.getAlc(this.ingr);
-        this.glass = glass;
+        this.alc = this.getAlc(this.ingredients);
+        this.glassware = glass;
     }
 
     getAlc(ingredients){

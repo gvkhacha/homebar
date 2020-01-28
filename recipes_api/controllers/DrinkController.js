@@ -33,6 +33,9 @@ router.get('/', (req, res) => {
 // Add new drink
 router.post('/', (req, res) => {
     const drink = new Drink(req.body.drink);
+    if(drink.img === ''){
+        drink.img = "https://static.vinepair.com/wp-content/uploads/2016/11/cocktailsubs-internal-header.jpg";
+    }
 
     drink.save((err, drink) => {
         if(err){

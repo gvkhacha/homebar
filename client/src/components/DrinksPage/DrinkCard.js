@@ -80,7 +80,7 @@ const DrinkCard = ({drink, admin}) => {
             />
             <CardMedia
                 className={classes.media}
-                image={drink.imgSrc}
+                image={drink.img}
                 title={drink.name}
             />
             <CardContent>
@@ -89,7 +89,7 @@ const DrinkCard = ({drink, admin}) => {
                         <ListItemText>Alcohol: {drink.alc}</ListItemText>
                     </ListItem>
                     <ListItem>
-                        <ListItemText>Glassware: {drink.glass}</ListItemText>
+                        <ListItemText>Glassware: {drink.glassware}</ListItemText>
                     </ListItem>
                 </List>
             </CardContent>
@@ -118,6 +118,10 @@ const DrinkCard = ({drink, admin}) => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
+                    <Typography paragraph>Ingredients:</Typography>
+                    {drink.ingredients.map((ingr, i) => (
+                        <Typography key={drink.name + "_ingr_" + i} paragraph>{ingr.quantity}oz {ingr.name}</Typography>
+                    ))}
                 <Typography paragraph>Method:</Typography>
                 {drink.steps.map((s, i) => (
                     <Typography key={drink.name + "_step_" + i} paragraph>{s}</Typography>

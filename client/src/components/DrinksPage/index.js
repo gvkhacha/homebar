@@ -1,17 +1,33 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
 
 import Drink from '../../util/Drink';
 import DrinkCard from './DrinkCard';
 import Layout from '../Layout';
 
 const DrinksPage = () => {
-    const ingr = [{name: 'cognac', quantity: 2}, {name: 'lemon juice', quantity: 0.75}, {name: 'triple sec', quantity: 0.75}];
+    const [drinks, setDrinks] = useState([]);
 
-    const TEST = new Drink("Cognac Sidecar", "http://placehold.it/250x250", ingr, ["Add all ingredients to shaker filled with ice", "Shake for 10 seconds", "Strain into coupe glass"], "Coupe")
-    
+    useEffect(() => {
+        axios.get('/drink')
+            .then(resp => resp.data)
+            .then(data => {
+                console.log(data);
+                if(data){
+                    setDrinks(data.map(obj => {
+                        return new Drink(obj.name, obj.img, obj.ingredients, obj.steps, obj.glassware);
+                    }))
+                }
+            })
+    }, [])
+
     return (
         <Layout>
-            <DrinkCard drink={TEST} admin={false}/>
+            {drinks.map(d => (
+                <DrinkCard drink={d} admin={false} key={d.name + "_CARD"} />
+            ))}
         </Layout>
     )
 }
