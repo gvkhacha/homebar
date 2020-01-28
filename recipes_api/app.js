@@ -11,6 +11,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const UserController = require('./controllers/UserController');
+const DrinkController = require('./controllers/DrinkController');
 
 
 require('./config/passport');
@@ -39,5 +40,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/users', UserController);
+app.use('/drink', DrinkController);
 
 module.exports = app;

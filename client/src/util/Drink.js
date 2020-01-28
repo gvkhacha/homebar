@@ -11,6 +11,9 @@ class Drink {
         this.name = toTitleCase(name);
         this.imgSrc = imgSrc;
         this.ingr = ingr.map(i => {
+            if(i.text){
+                return {name: toTitleCase(i.text), quantity: i.qty};
+            }
             return {name: toTitleCase(i.name), quantity: i.quantity};
         }); 
 
