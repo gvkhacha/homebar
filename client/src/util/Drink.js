@@ -7,7 +7,8 @@ const toTitleCase = (str) => {
 const ALC = ["Vodka", "Rum", "Gin", "Cognac", "Brandy", "Tequila", "Whiskey", "Champange", "Wine", "Beer", "Scotch", "Bourbon", "Rye"]
 
 class Drink {
-    constructor(name, imgSrc, ingr, steps, glass){
+    constructor(id, name, imgSrc, ingr, steps, glass){
+        this.id = id;
         this.name = toTitleCase(name);
         this.img = imgSrc;
         this.ingredients = ingr.map(i => {

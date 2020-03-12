@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import axios from 'axios';
 
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -62,6 +63,8 @@ const DrinkCard = ({drink, admin}) => {
     const orderDrink = () => {
         setOrdered(true);
         console.log("add call to add order");
+        console.log(drink);
+        axios.post(`/drink/order/${drink.id}`);
     }
 
     const cancelOrder = () => {

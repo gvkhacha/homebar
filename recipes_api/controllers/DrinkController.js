@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 const Drink = require('../models/Drink');
 
 const router = express.Router();
+let orderedDrinks = [];
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
@@ -33,6 +35,7 @@ router.get('/', (req, res) => {
 // Add new drink
 router.post('/', (req, res) => {
     const drink = new Drink(req.body.drink);
+    drink.id = null;
     if(drink.img === ''){
         drink.img = "https://static.vinepair.com/wp-content/uploads/2016/11/cocktailsubs-internal-header.jpg";
     }
@@ -46,10 +49,24 @@ router.post('/', (req, res) => {
     })
 });
 
-// router.get('/id/:id', (req, res) =>{
+router.get('/order', (req, res) => {
+    Drink.find({
+        '_id': {
+            $in: orderedDrinks.map(id => mongoose.Types.ObjectId(id))
+        }
+    }, (err, docs) => {
+        if(err){
+            res.status(404).send(err);
+        }
+        res.status(200).send(docs);
+    })
+})
 
-// });
-
+router.post('/order/:id', (req, res) => {
+    var id = req.params.id;
+    orderedDrinks.push(id);
+    res.status(200).send();
+})
 
 
 module.exports = router;

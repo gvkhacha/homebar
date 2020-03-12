@@ -11,13 +11,19 @@ const DrinksPage = () => {
     const [drinks, setDrinks] = useState([]);
 
     useEffect(() => {
+        axios.get('/drink/order')
+            .then(resp => resp.data)
+            .then(data => {
+                console.log(data);
+            });
+
         axios.get('/drink')
             .then(resp => resp.data)
             .then(data => {
                 console.log(data);
                 if(data){
                     setDrinks(data.map(obj => {
-                        return new Drink(obj.name, obj.img, obj.ingredients, obj.steps, obj.glassware);
+                        return new Drink(obj._id, obj.name, obj.img, obj.ingredients, obj.steps, obj.glassware);
                     }))
                 }
             })

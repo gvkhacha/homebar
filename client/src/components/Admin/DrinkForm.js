@@ -31,7 +31,7 @@ const DrinkForm = () => {
 
     const submit = () => {
         if(validateInput()){
-            const drink = new Drink(name, '', ingr, steps, glass);
+            const drink = new Drink('', name, '', ingr, steps, glass);
             console.log(drink);
             axios.post('/drink', {drink})
                 .then(data => {
