@@ -56,16 +56,45 @@ router.get('/order', (req, res) => {
         }
     }, (err, docs) => {
         if(err){
-            res.status(404).send(err);
+            return res.status(500).send(err);
         }
         res.status(200).send(docs);
     })
 })
 
 router.post('/order/:id', (req, res) => {
-    var id = req.params.id;
+    const id = req.params.id;
     orderedDrinks.push(id);
-    res.status(200).send();
+    Drink.find({
+        '_id': {
+            $in: orderedDrinks.map(id => mongoose.Types.ObjectId(id))
+        }
+    }, (err, docs) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        res.status(200).send(docs);
+    })
+})
+
+router.delete('/order/:id', (req, res) => {
+    const id = req.params.id;
+    const index = orderedDrinks.indexOf(id);
+    if(index != -1){
+        orderedDrinks.splice(index, 1);
+        Drink.find({
+            '_id': {
+                $in: orderedDrinks.map(id => mongoose.Types.ObjectId(id))
+            }
+        }, (err, docs) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.status(200).send(docs);
+        })
+    }else{
+        res.status(404).send("Drink not currently added to orders");
+    }
 })
 
 

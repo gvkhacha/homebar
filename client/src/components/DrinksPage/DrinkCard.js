@@ -1,8 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
-import axios from 'axios';
 
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { addOrder, removeOrder } from '../../actions/drinkActions';
+
+
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -53,6 +57,8 @@ const useStyles = makeStyles(theme => ({
 
 const DrinkCard = ({drink, admin}) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
     const [expanded, setExpanded] = useState(false);
     const [ordered, setOrdered] = useState(false);
 
@@ -62,13 +68,11 @@ const DrinkCard = ({drink, admin}) => {
 
     const orderDrink = () => {
         setOrdered(true);
-        console.log("add call to add order");
-        console.log(drink);
-        axios.post(`/drink/order/${drink.id}`);
+        dispatch(addOrder(drink.id))
     }
 
     const cancelOrder = () => {
-        console.log("Add call to remove order");
+        dispatch(removeOrder(drink.id))
     }
 
     return (

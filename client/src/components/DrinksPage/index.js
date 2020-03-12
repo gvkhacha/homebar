@@ -11,12 +11,6 @@ const DrinksPage = () => {
     const [drinks, setDrinks] = useState([]);
 
     useEffect(() => {
-        axios.get('/drink/order')
-            .then(resp => resp.data)
-            .then(data => {
-                console.log(data);
-            });
-
         axios.get('/drink')
             .then(resp => resp.data)
             .then(data => {
