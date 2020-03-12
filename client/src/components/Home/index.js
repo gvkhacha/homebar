@@ -14,11 +14,13 @@ const Home = () => {
     useEffect(() => {
         dispatch(getCurrentOrders())
     }, [dispatch])
+
+    let count = 0;
     return (
         <Layout>
             <Dashboard />
             {currentDrinks.map(d => (
-                <DrinkCard drink={d} admin={true} key={d.id} />
+                <DrinkCard drink={d} admin={true} key={d.id + count++} />
             ))}
         </Layout>
     )

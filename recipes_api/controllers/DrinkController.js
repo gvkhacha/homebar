@@ -21,6 +21,25 @@ function authenticationMiddleware() {
     }
 }
 
+function addMultiplesOfDrinks (drinks) {
+    const map = new Map();
+    orderedDrinks.forEach(a => {
+        map.set(a, (map.get(a) || 0) + 1);
+    });
+
+
+    for (let [key, value] of map) {
+        if(value > 1){
+            for(let i = 1; i<value; i++){
+                const drink = drinks.find(d => d._id == key);
+                drinks.push(drink);
+            }
+        }
+    }
+
+    return drinks;
+}
+
 
 // Get all drinks
 router.get('/', (req, res) => {
@@ -58,7 +77,7 @@ router.get('/order', (req, res) => {
         if(err){
             return res.status(500).send(err);
         }
-        res.status(200).send(docs);
+        res.status(200).send(addMultiplesOfDrinks(docs));
     })
 })
 
@@ -73,7 +92,7 @@ router.post('/order/:id', (req, res) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.status(200).send(docs);
+        res.status(200).send(addMultiplesOfDrinks(docs));
     })
 })
 
@@ -90,7 +109,7 @@ router.delete('/order/:id', (req, res) => {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.status(200).send(docs);
+            res.status(200).send(addMultiplesOfDrinks(docs));
         })
     }else{
         res.status(404).send("Drink not currently added to orders");
