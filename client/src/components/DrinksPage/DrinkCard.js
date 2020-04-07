@@ -29,6 +29,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Block from '@material-ui/icons/Block';
+import ExposurePlus1 from '@material-ui/icons/ExposurePlus1';
 
 
 const useStyles = makeStyles(theme => ({
@@ -102,9 +103,14 @@ const DrinkCard = ({drink, admin}) => {
             </CardContent>
             <CardActions disableSpacing>
                 {admin ? 
-                    <IconButton onClick={cancelOrder}>
-                        <Block />
-                    </IconButton>
+                    <div>
+                        <IconButton onClick={cancelOrder}>
+                            <Block />
+                        </IconButton>
+                        <IconButton onClick={orderDrink}>
+                            <ExposurePlus1 />
+                        </IconButton>
+                    </div>
                     :<IconButton 
                         onClick={orderDrink}
                         aria-label="add to favorites">
@@ -126,13 +132,17 @@ const DrinkCard = ({drink, admin}) => {
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <Typography paragraph>Ingredients:</Typography>
-                    {drink.ingredients.map((ingr, i) => (
-                        <Typography key={drink.name + "_ingr_" + i} paragraph>{ingr.quantity}oz {ingr.name}</Typography>
-                    ))}
+                    <ul>
+                        {drink.ingredients.map((ingr, i) => (
+                            <li key={drink.name + "_ingr_" + i + "_bullet"}><Typography key={drink.name + "_ingr_" + i} paragraph>{ingr.quantity}oz {ingr.name}</Typography></li>
+                        ))}
+                    </ul>
                 <Typography paragraph>Method:</Typography>
-                {drink.steps.map((s, i) => (
-                    <Typography key={drink.name + "_step_" + i} paragraph>{s}</Typography>
-                ))}
+                <ol>
+                    {drink.steps.map((s, i) => (
+                        <li key={drink.name + "_step_" + i + "_bullet"}><Typography key={drink.name + "_step_" + i} paragraph>{s}</Typography></li>
+                    ))}
+                </ol>
                 </CardContent>
             </Collapse>
         </Card>

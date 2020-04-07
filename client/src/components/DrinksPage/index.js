@@ -5,10 +5,22 @@ import axios from 'axios';
 
 import Drink from '../../util/Drink';
 import DrinkCard from './DrinkCard';
+import DrinkFilter from './DrinkFilter';
 import Layout from '../Layout';
+
+const ListDrinks = ({drinks}) => {
+    return (
+        <div>
+            {drinks.map(d => (
+                <DrinkCard drink={d} admin={false} key={d.name + "_CARD"} />
+            ))}
+        </div>
+    )
+}
 
 const DrinksPage = () => {
     const [drinks, setDrinks] = useState([]);
+    const [alcFilter, setFilter] = useState('all');
 
     useEffect(() => {
         axios.get('/drink')
@@ -25,9 +37,17 @@ const DrinksPage = () => {
 
     return (
         <Layout>
-            {drinks.map(d => (
-                <DrinkCard drink={d} admin={false} key={d.name + "_CARD"} />
-            ))}
+            <DrinkFilter alc={alcFilter} setFilter={setFilter} />
+            <ListDrinks drinks={drinks.filter(d => {
+                if(alcFilter === 'all') return true;
+                
+                for(let i = 0; i<d.ingredients.length; i++){
+                    if(d.ingredients[i].name.toLowerCase().includes(alcFilter)){
+                        return true;
+                    }
+                }
+                return false;
+            })} />
         </Layout>
     )
 }
