@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {pendingTask, begin, end} from 'react-redux-spinner';
-import {LOGIN_SUCCESS, LOGOUT} from '../types';
+import {LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT} from '../types';
 
 import {saveState, deleteState} from '../util/restore';
 
@@ -15,7 +15,10 @@ export const loginUser = user => dispatch => {
             saveState(user);
             dispatch({type:LOGIN_SUCCESS, payload: user, [pendingTask]: end})
         })
-        .catch(err => err);
+        .catch(err => {
+            dispatch({type:LOGIN_FAIL, [pendingTask]: end})
+            return err;
+        });
     }
 
 export const restoreSession = () => dispatch => {

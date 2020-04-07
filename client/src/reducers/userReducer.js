@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGOUT} from '../types';
+import {LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT} from '../types';
 
 const initialState = {
     email: '',
@@ -16,6 +16,8 @@ export default function(state=initialState, action){
                 id: action.payload.id,
                 loggedIn: true
             };
+        case LOGIN_FAIL:
+            return state;
         case LOGOUT:
             return {
                 ...state,

@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { addOrder, removeOrder } from '../../actions/drinkActions';
 
@@ -57,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const DrinkCard = ({drink, admin}) => {
+    const user = useSelector(state => state.user);
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -75,7 +76,7 @@ const DrinkCard = ({drink, admin}) => {
     const cancelOrder = () => {
         dispatch(removeOrder(drink.id))
     }
-
+    console.log(user);
     return (
         <Card className={classes.card}>
             <CardHeader
@@ -104,9 +105,11 @@ const DrinkCard = ({drink, admin}) => {
             <CardActions disableSpacing>
                 {admin ? 
                     <div>
-                        <IconButton onClick={cancelOrder}>
-                            <Block />
-                        </IconButton>
+                        {user.loggedIn ? 
+                            <IconButton onClick={cancelOrder}>
+                                <Block />
+                            </IconButton> : <></>
+                        }
                         <IconButton onClick={orderDrink}>
                             <ExposurePlus1 />
                         </IconButton>

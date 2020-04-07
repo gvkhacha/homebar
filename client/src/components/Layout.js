@@ -26,9 +26,9 @@ import {
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Person from '@material-ui/icons/Person';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import MailIcon from '@material-ui/icons/Mail';
+// import Person from '@material-ui/icons/Person';
 import Settings from '@material-ui/icons/Settings';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import {
@@ -125,32 +125,27 @@ const SidebarList = () => {
         iconElement: <LocalBar />
       }
     ],
-    [
-      {
-        text: 'All Mail', 
-        click: () => redirect(''), 
-        iconElement: <InboxIcon />
-      },
-      {
-        text: 'Spam', 
-        click: () => redirect(''), 
-        iconElement: <MailIcon />
-      },
-      {
-        text: 'Outbox',
-        click: () => redirect(''),
-        iconElement: <InboxIcon />
-      }
-    ],
+    // [
+    //   {
+    //     text: 'All Mail', 
+    //     click: () => redirect(''), 
+    //     iconElement: <InboxIcon />
+    //   },
+    //   {
+    //     text: 'Spam', 
+    //     click: () => redirect(''), 
+    //     iconElement: <MailIcon />
+    //   },
+    //   {
+    //     text: 'Outbox',
+    //     click: () => redirect(''),
+    //     iconElement: <InboxIcon />
+    //   }
+    // ],
     [
       {
         text: 'Admin',
         click: () => redirect('/admin'),
-        iconElement: <Person />
-      },
-      {
-        text: 'Settings',
-        click: () => redirect(''),
         iconElement: <Settings />
       },
       {
@@ -179,7 +174,7 @@ const SidebarList = () => {
 
 const Layout = ({children}) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
