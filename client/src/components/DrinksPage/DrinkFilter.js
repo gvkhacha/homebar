@@ -5,6 +5,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const TYPES = ["all", "gin", "vodka", "cognac", "whiskey", "tequila"];
 
@@ -18,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const DrinkFilter = ({alc, setFilter}) => {
+const DrinkFilter = ({alc, setFilter, onlyAvail, toggleAvail}) => {
     const classes = useStyles();
 
     return (
@@ -35,6 +37,13 @@ const DrinkFilter = ({alc, setFilter}) => {
                         <MenuItem value={alcType} key={alcType}>{alcType[0].toUpperCase() + alcType.substr(1)}</MenuItem>
                     )}
                 </Select>
+                
+                <FormControlLabel
+                    control={
+                        <Checkbox checked={onlyAvail} onChange={() => toggleAvail(!onlyAvail)} name="onlyAvailableCheck" />
+                    }
+                    label="Only show Available Drinks"
+                    />
             </FormControl>
         </div>
     )

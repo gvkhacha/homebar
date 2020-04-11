@@ -76,7 +76,6 @@ const DrinkCard = ({drink, admin}) => {
     const cancelOrder = () => {
         dispatch(removeOrder(drink.id))
     }
-    console.log(user);
     return (
         <Card className={classes.card}>
             <CardHeader
