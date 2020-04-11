@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 
 const UserController = require('./controllers/UserController');
 const DrinkController = require('./controllers/DrinkController');
+const IngredientController = require('./controllers/IngredientController');
 
 
 require('./config/passport');
@@ -41,5 +42,6 @@ app.use(passport.session());
 
 app.use('/users', UserController);
 app.use('/drink', DrinkController);
+app.use('/ingredients', IngredientController);
 
 module.exports = app;

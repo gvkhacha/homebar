@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const url = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@clusterp-t0dvb.mongodb.net/${process.env.MONGODB_NAME}?retryWrites=true&w=majority`;
 const options = {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: true
 };
 
 mongoose.connect(url, options);

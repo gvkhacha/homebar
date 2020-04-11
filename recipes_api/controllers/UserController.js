@@ -58,8 +58,13 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 
 router.get('/test', authenticationMiddleware(), (req, res) => {
     console.log(req.user);
-    console.log(req.isAuthenticated());
-    res.status(200).send();
+    const isAuth = req.isAuthenticated();
+    console.log(isAuth);
+    if(isAuth){
+        res.status(200).send("User is successfully authenticated.");
+    }else{
+        res.status(401).send("User is not authenticated.");
+    }
 })
 
 router.get('/logout', authenticationMiddleware(), (req, res) => {
