@@ -50,17 +50,34 @@ router.post('/', authenticationMiddleware(), (req, res) => {
     })
 })
 
-router.patch('/:id', authenticationMiddleware(), (req, res) => {
-    const id = req.params.id;
-    const avail = req.body.available;
+router.patch('/', authenticationMiddleware(), (req, res) => {
+    const avail = req.body.true;
+    const unavailable = req.body.false;
+    console.log(avail);
+    console.log(unavailable);
+    let success = true;
 
-    Ingredient.findOneAndUpdate({_id: id}, {$set: {available: avail}}, (err, data) => {
-        if(err){
-            return res.status(500).send("Error in retrieving Ingredient from database");
+    Ingredient.updateMany(
+        {_id: {$in: avail}},
+        {$set: {available: true}},
+        (err, data) => {
+            if(err){ success = false;}
         }
-        data.available = avail;
-        res.status(200).send(data);
-    })
+    )
+
+    Ingredient.updateMany(
+        {_id: {$in: unavailable}},
+        {$set: {available: false}},
+        (err, data) => {
+            if(err){ success = false;}
+        }
+    )
+
+    if(success){
+        res.status(200).send();
+    }else{
+        res.status(500).send();
+    }
 })
 
 router.delete('/:id', authenticationMiddleware(), (req, res) => {

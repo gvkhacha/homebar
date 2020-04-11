@@ -16,6 +16,7 @@ import DrinksPage from './components/DrinksPage';
 
 
 import './sass/style.scss'
+import IngredientAdmin from './components/Admin/IngredientAdmin';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
     <Spinner />
     <BrowserRouter>
       <Switch>
+        <AuthRoute path='/admin/ingredients' component={IngredientAdmin}></AuthRoute>
         <AuthRoute path='/admin' component={Admin}></AuthRoute>
         <Route path='/login'><LoginComponent /></Route>
         <Route path='/drinks'><DrinksPage /></Route>

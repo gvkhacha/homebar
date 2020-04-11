@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState} from 'react';
+import { useState, useRef } from 'react';
 
 import axios from 'axios';
 
@@ -26,6 +26,7 @@ const DrinkForm = () => {
     const [ingr, setIngr] = useState([{text: 'Gin', qty: 3},{text: 'Dry Vermouth', qty: 0.5}]);
     const [steps, setSteps] = useState(['Add all ingredients to mixing glass', 'Stir well with ice', 'Strain in chilled martini glass', 'Garnish with lemon peel or olives'])
     const [glass, setGlass] = useState('Martini');
+    const [url, setUrl] = useState("");
 
     const [open, setOpen] = useState(false);
 
@@ -47,6 +48,10 @@ const DrinkForm = () => {
         return true;
     }
 
+    const handleIngrChange = (ingredients, target) => {
+        setIngr(ingredients);
+        target.focus();
+    }
 
     return (
         <form>
@@ -74,10 +79,15 @@ const DrinkForm = () => {
                     value={name} onChange={(e) => setName(e.target.value)}
                     autoComplete='off'
                 />
+                <TextField
+                    label='Image'
+                    value={url} onChange={(e) => setUrl(e.target.value)}
+                    autoComplete='off'
+                />
             </FormControl>
             <FormControl>
                 <Typography variant='h5' component='h6'>Ingredients</Typography>
-                <RecipeIngrForm inputs={ingr} setInputs={setIngr} />
+                <RecipeIngrForm inputs={ingr} setInputs={handleIngrChange} />
             </FormControl>
             <FormControl>
                 <Typography variant='h5' component='h6'>Steps</Typography>

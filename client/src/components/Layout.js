@@ -149,6 +149,11 @@ const SidebarList = () => {
         iconElement: <Settings />
       },
       {
+        text: 'Ingredients',
+        click: () => redirect('/admin/ingredients'),
+        iconElement: <Settings />
+      },
+      {
         text: 'Logout',
         click: () => dispatch(logoutUser()),
         iconElement: <ExitToApp />
