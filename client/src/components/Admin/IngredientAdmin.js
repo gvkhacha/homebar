@@ -15,6 +15,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +48,15 @@ function groupBy(arr, property) {
     }, {});
 }
 
+const CATS = ["all", "alcohol", "liqueur", "juice", "wine", "other"];
+
 const IngredientAdmin = () => {
   const classes = useStyles();
   const history = useHistory();
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
+  const [category, setCategory] = useState("alcohol");
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -135,9 +140,21 @@ const IngredientAdmin = () => {
     <Layout>
         <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
             <Grid item>
+                <Select
+                    labelId="categoryFilter"
+                    id="categoryFilter-select"
+                    value={category}
+                    onChange={e => setCategory(e.target.value)}
+                >
+                    {CATS.map(text => 
+                        <MenuItem value={text} key={text}>{text[0].toUpperCase() + text.substr(1)}</MenuItem>
+                    )}
+                </Select>
+            </Grid>
+            <Grid item>
                 <Grid container direction="column" alignItems="center">
                     <Grid item><Typography>Unavailable Ingredients</Typography></Grid>
-                    <Grid item>{customList(left)}</Grid>
+                    <Grid item>{customList(left.filter(obj => category === 'all' || obj.category.toLowerCase() === category))}</Grid>
                 </Grid>
             </Grid>
             <Grid item>
@@ -187,7 +204,7 @@ const IngredientAdmin = () => {
             <Grid item>
                 <Grid container direction="column" alignItems="center">
                     <Grid item><Typography>Available Ingredients</Typography></Grid>
-                    <Grid item>{customList(right)}</Grid>
+                    <Grid item>{customList(right.filter(obj => category === 'all' || obj.category.toLowerCase() === category))}</Grid>
                 </Grid>
             </Grid>
             <Grid item>
