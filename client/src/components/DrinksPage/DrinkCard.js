@@ -35,10 +35,12 @@ import ExposurePlus1 from '@material-ui/icons/ExposurePlus1';
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 345,
+    margin: 5
   },
   media: {
-    height: 0,
     paddingTop: '56.25%', // 16:9
+    width: "100%",
+    height: "300px"
   },
   expand: {
     transform: 'rotate(0deg)',

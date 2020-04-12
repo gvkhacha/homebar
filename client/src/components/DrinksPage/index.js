@@ -8,6 +8,10 @@ import DrinkCard from './DrinkCard';
 import DrinkFilter from './DrinkFilter';
 import Layout from '../Layout';
 
+
+import Grid from '@material-ui/core/Grid';
+
+
 function filterDrinks(drinks, alcFilter, onlyAvail, availableIngr){
     let filtered = drinks.filter(d => {
         if(alcFilter === 'all') return true;
@@ -37,11 +41,11 @@ function filterDrinks(drinks, alcFilter, onlyAvail, availableIngr){
 
 const ListDrinks = ({drinks}) => {
     return (
-        <div>
+        <Grid container spacing={2}>
             {drinks.map(d => (
                 <DrinkCard drink={d} admin={false} key={d.name + "_CARD"} />
             ))}
-        </div>
+        </Grid>
     )
 }
 

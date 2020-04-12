@@ -7,9 +7,11 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 
-const RecipeIngrForm = ({ inputs, setInputs }) => {
+const RecipeIngrForm = ({ inputs, setInputs, ingredients }) => {
     //State handled in parent
 
     const handleChange = (event, index, change) => {
@@ -40,11 +42,16 @@ const RecipeIngrForm = ({ inputs, setInputs }) => {
             <List>
                 {inputs.map((obj, i) => (
                     <ListItem key={"ingr_" + obj.text + "_" + i}>
-                        <TextField
-                            type='text' label='Ingredient'
-                            value={obj.text} onChange={(e) => handleChange(e, i, 'text')}
-                            autoComplete='off'
-                        />
+                        <Select
+                            labelId="categoryFilter"
+                            id="categoryFilter-select"
+                            value={obj.text}
+                            onChange={e => handleChange(e, i, 'text')}
+                        >
+                            {ingredients.map(i =>
+                                <MenuItem value={i.name} key={i.name}>{i.name[0].toUpperCase() + i.name.substr(1)}</MenuItem>                               
+                            )}
+                        </Select>
                         <TextField
                             type='number' label='Quantity(oz)'
                             inputProps={{ step: "0.25", min: '0', max: '6' }}

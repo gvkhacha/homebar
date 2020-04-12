@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
@@ -29,14 +29,22 @@ const DrinkForm = () => {
     const [url, setUrl] = useState("");
 
     const [open, setOpen] = useState(false);
+    const [allIngredients, setAllIngredients] = useState([]);
+
+    useEffect(() => {
+        axios.get('/ingredients').then(result => result.data).then(data => {
+            setAllIngredients(data.sort((a, b) => a.name > b.name ? 1 : -1));
+        })
+      }, []);
+
 
     const submit = () => {
         if(validateInput()){
-            const drink = new Drink('', name, '', ingr, steps, glass);
+            const drink = new Drink('', name, url, ingr, steps, glass);
             console.log(drink);
             axios.post('/drink', {drink})
                 .then(data => {
-                    console.log(data);
+                    alert("New drink created successfully.");
                 })
                 .catch(err => {
                     setOpen(true);
@@ -48,9 +56,8 @@ const DrinkForm = () => {
         return true;
     }
 
-    const handleIngrChange = (ingredients, target) => {
+    const handleIngrChange = (ingredients) => {
         setIngr(ingredients);
-        target.focus();
     }
 
     return (
@@ -87,7 +94,7 @@ const DrinkForm = () => {
             </FormControl>
             <FormControl>
                 <Typography variant='h5' component='h6'>Ingredients</Typography>
-                <RecipeIngrForm inputs={ingr} setInputs={handleIngrChange} />
+                <RecipeIngrForm inputs={ingr} setInputs={handleIngrChange} ingredients={allIngredients} />
             </FormControl>
             <FormControl>
                 <Typography variant='h5' component='h6'>Steps</Typography>
