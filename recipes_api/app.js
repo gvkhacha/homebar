@@ -40,8 +40,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/users', UserController);
-app.use('/drink', DrinkController);
-app.use('/ingredients', IngredientController);
+app.use('/', express.static('dist'));
+app.use('/api/users', UserController);
+app.use('/api/drink', DrinkController);
+app.use('/api/ingredients', IngredientController);
 
 module.exports = app;

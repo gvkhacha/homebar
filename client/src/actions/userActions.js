@@ -7,7 +7,7 @@ import {saveState, deleteState} from '../util/restore';
 
 export const loginUser = user => dispatch => {
     dispatch({type: '', [pendingTask]: begin});
-    return axios.post("/users/login", {user: user})
+    return axios.post("/api/users/login", {user: user})
         .then(res => res.data)
         .then(data => {
             const user = {id: data._id, email: data.email};
@@ -22,7 +22,7 @@ export const loginUser = user => dispatch => {
     }
 
 export const restoreSession = () => dispatch => {
-    return axios.get("/users/login").then(resp =>{
+    return axios.get("/api/users/login").then(resp =>{
         if(resp.status === 200){
             const user = resp.data;
 
@@ -35,5 +35,5 @@ export const restoreSession = () => dispatch => {
 export const logoutUser = () => dispatch => {
     deleteState();
     dispatch({type: LOGOUT})
-    return axios.get('/users/logout');
+    return axios.get('/api/users/logout');
 }

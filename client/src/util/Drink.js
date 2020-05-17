@@ -4,7 +4,7 @@ const toTitleCase = (str) => {
     })
 }
 
-const ALC = ["Vodka", "Rum", "Gin", "Cognac", "Brandy", "Tequila", "Whiskey", "Champange", "Wine", "Beer", "Scotch", "Bourbon", "Rye"]
+const ALC = ["Vodka", "Rum", "Gin", "Cognac", "Brandy", "Tequila", "Rye", "Scotch", "Bourbon", "Whiskey", "Champagne", "Wine", "Beer"];
 
 class Drink {
     constructor(id, name, imgSrc, ingr, steps, glass){
@@ -24,7 +24,14 @@ class Drink {
     }
 
     getAlc(ingredients){
-        return ALC.find(a => ingredients.map(i => i.name).includes(a)) || "Liqeur";
+        for(let i = 0; i<ingredients.length; i++){
+            for(let k=0; k<ALC.length; k++){
+                if(ingredients[i].name.toLowerCase().includes(ALC[k].toLowerCase())){
+                    return ALC[k];
+                }
+            }
+        }
+        return "Liqueur";
     }
 }
 

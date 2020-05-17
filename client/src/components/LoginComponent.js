@@ -64,7 +64,7 @@ const LoginComponent = () => {
     }
 
     const test = () => {
-        axios.get('/users/test').then(resp => console.log(resp));
+        axios.get('/api/users/test').then(resp => console.log(resp));
     }
 
     return (

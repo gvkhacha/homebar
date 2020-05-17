@@ -5,7 +5,7 @@ import { ADD_ORDER, REMOVE_ORDER } from '../types';
 import Drink from '../util/Drink';
 
 export const getCurrentOrders = () => dispatch => {
-    return axios.get("/drink/order")
+    return axios.get("/api/drink/order")
         .then(res => res.data)
         .then(data => {
             const drinks = data.map(d => {
@@ -17,7 +17,7 @@ export const getCurrentOrders = () => dispatch => {
 
 export const addOrder = id => dispatch => {
     dispatch({ type: '', [pendingTask]: begin });
-    return axios.post(`/drink/order/${id}`)
+    return axios.post(`/api/drink/order/${id}`)
         .then(res => res.data)
         .then(data => {
             const drinks = data.map(d => {
@@ -29,7 +29,7 @@ export const addOrder = id => dispatch => {
 
 export const removeOrder = id => dispatch => {
     dispatch({type: '', [pendingTask]: begin});
-    return axios.delete(`/drink/order/${id}`)
+    return axios.delete(`/api/drink/order/${id}`)
         .then(res => res.data)
         .then(data => {
             const drinks = data.map(d => {

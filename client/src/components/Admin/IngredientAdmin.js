@@ -56,15 +56,14 @@ const IngredientAdmin = () => {
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
-  const [category, setCategory] = useState("alcohol");
+  const [category, setCategory] = useState("all");
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
   useEffect(() => {
-    axios.get('/ingredients').then(result => result.data).then(data => {
+    axios.get('/api/ingredients').then(result => result.data).then(data => {
         const grouped = groupBy(data, "available");
-        console.log(grouped.false);
         setLeft(grouped.false || []);
         setRight(grouped.true || []);
     })
@@ -106,15 +105,16 @@ const IngredientAdmin = () => {
   };
 
   const submit = () => {
-      const data = {"true": right, "false": left};
-      axios.patch("/ingredients", data);
+      const data = {"true": right.map(i => i._id), "false": left.map(i => i._id)};
+      axios.patch("/api/ingredients", data)
       history.push('/admin');
   }
 
   const customList = (items) => (
     <Paper className={classes.paper}>
       <List dense component="div" role="list">
-        {items.map((value) => {
+        {items.sort((a, b) => a.name > b.name ? 1 : -1)
+          .map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
 
           return (

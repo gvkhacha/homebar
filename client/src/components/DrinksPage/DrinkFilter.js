@@ -8,7 +8,7 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-const TYPES = ["all", "gin", "vodka", "cognac", "whiskey", "tequila"];
+const TYPES = ["all", "gin", "vodka", "cognac", "whiskey", "tequila", "rum"];
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

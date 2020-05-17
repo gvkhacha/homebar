@@ -19,7 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Drink from '../../util/Drink';
 
-const glassware = ['Martini', 'Old-Fashioned', 'Highball', 'Coupe', 'Mule'];
+const glassware = ['Martini', 'Old-Fashioned', 'Highball', 'Coupe', 'Mule', 'Shot'];
 
 const DrinkForm = () => {
     const [name, setName] = useState('Martini');
@@ -32,7 +32,7 @@ const DrinkForm = () => {
     const [allIngredients, setAllIngredients] = useState([]);
 
     useEffect(() => {
-        axios.get('/ingredients').then(result => result.data).then(data => {
+        axios.get('/api/ingredients').then(result => result.data).then(data => {
             setAllIngredients(data.sort((a, b) => a.name > b.name ? 1 : -1));
         })
       }, []);
@@ -42,7 +42,7 @@ const DrinkForm = () => {
         if(validateInput()){
             const drink = new Drink('', name, url, ingr, steps, glass);
             console.log(drink);
-            axios.post('/drink', {drink})
+            axios.post('/api/drink', {drink})
                 .then(data => {
                     alert("New drink created successfully.");
                 })

@@ -15,7 +15,6 @@ import Grid from '@material-ui/core/Grid';
 function filterDrinks(drinks, alcFilter, onlyAvail, availableIngr){
     let filtered = drinks.filter(d => {
         if(alcFilter === 'all') return true;
-        
         for(let i = 0; i<d.ingredients.length; i++){
             if(d.ingredients[i].name.toLowerCase().includes(alcFilter)){
                 return true;
@@ -56,7 +55,7 @@ const DrinksPage = () => {
     const [availIngr, setAvailIngr] = useState([]);
 
     useEffect(() => {
-        axios.get('/drink')
+        axios.get('/api/drink')
             .then(resp => resp.data)
             .then(data => {
                 if(data){
@@ -66,7 +65,7 @@ const DrinksPage = () => {
                 }
             });
         
-        axios.get("/ingredients/available")
+        axios.get("/api/ingredients/available")
             .then(resp => resp.data)
             .then(data => {
                 if(data){

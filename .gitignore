@@ -1,3 +1,4 @@
 node_modules/
 recipes_api/config/databse.js
 recipes_api/.env
+recipes_api/dist
